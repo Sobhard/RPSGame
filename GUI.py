@@ -96,7 +96,7 @@ SCREEN_HEIGHT = 768
 LIGHTBROWN = (232, 179, 89)
 BROWN = (143, 75, 2)
 ORANGE = (253, 152, 50)
-FONT = pygame.font.SysFont('calibri', 100)
+FONT = pygame.font.SysFont('calibri', 50)
 
 #PNGS
 rockPic = pygame.transform.scale(pygame.image.load("gesturePNGs/rock.png"), (200, 200))
@@ -135,27 +135,27 @@ toggleAnnotationButton = Button(
     text='Toggle Annotations',
     fontSize = 30,
     margin = 20,
-    inactiveColor=(200, 50, 0),
-    hoverColor=(150, 0, 0),
-    pressedColor=(0, 200, 20),
+    inactiveColor=(109, 106, 247),
+    hoverColor=(109, 106, 247),
+    pressedColor=(109, 106, 247),
     radius=20,
     onClick=lambda: toggleAnnotations()
 )
 
 startGameButton = Button(
     screen,
-    SCREEN_LENGTH/3 - 25,
-    SCREEN_HEIGHT/5 + 460,
-    SCREEN_LENGTH/3 + 50,
-    SCREEN_HEIGHT/5 - 150,
+    int(1.78/10 * SCREEN_LENGTH),
+    int(4.95/5.63 *SCREEN_HEIGHT - 10),
+    int(1.78/10 * SCREEN_LENGTH),
+    int(0.57/5.63 * SCREEN_HEIGHT + 10),
 
     text='Start Round',
-    fontSize = 30,
+    fontSize = 35,
     margin = 20,
-    inactiveColor=(200, 50, 0),
-    hoverColor=(150, 0, 0),
-    pressedColor=(0, 200, 20),
-    radius=20,
+    inactiveColor=(109, 106, 247),
+    hoverColor=(109, 106, 247),
+    pressedColor=(109, 106, 247),
+    radius=10,
     onClick=lambda: playGame()
 )
 
@@ -199,14 +199,15 @@ while run:
     #pygame.draw.rect(screen, BROWN, (SCREEN_LENGTH/3 - 25, SCREEN_HEIGHT/5 - 25, surface_width + 50, surface_height + 50), width=25, border_radius=25)
 
     #ROCK PAPER SCISSOR SHOOT display/text box
-    pygame.draw.rect(screen, ORANGE, pygame.Rect(SCREEN_LENGTH/3 - 25, 20, 580, 150), border_radius=25)
-    screen.blit(FONT.render(titleText, True, BROWN), (SCREEN_LENGTH/3 + 50, 50))
-
+    #pygame.draw.rect(screen, ORANGE, pygame.Rect(SCREEN_LENGTH/3 - 25, 20, 580, 150), border_radius=25)
+    #TEXT
+    screen.blit(FONT.render(titleText, True, BROWN), (int(5.81/10 * SCREEN_LENGTH), int(3.34/5.63 * SCREEN_HEIGHT)))
+    #CAMERA
     screen.blit(surface, (int((0.77/10) * SCREEN_LENGTH), int((0.97 / 5.63) * SCREEN_HEIGHT)))
 
     if displayGesture:
-        x = 700
-        y = 750
+        x = int(5.47/10 * SCREEN_LENGTH)
+        y = int(2.03/5.63 * SCREEN_HEIGHT)
         if currDisplayGesture == "Rock":
             screen.blit(rockPic, (x, y))
         if currDisplayGesture == "Paper":
