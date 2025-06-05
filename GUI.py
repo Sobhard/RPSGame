@@ -25,7 +25,8 @@ gesture_map = {
 pygame.init()
 
 def cvImage_to_pyGameSurface(frame):
-    frame = cv2.resize(frame, (int(SCREEN_LENGTH/3), int(SCREEN_HEIGHT/3)))
+    CAMERA_SIZE = int((3.8/10) * SCREEN_LENGTH)
+    frame = cv2.resize(frame, (CAMERA_SIZE, CAMERA_SIZE))
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     frame_flipped = cv2.flip(frame_rgb, 0)
     frame_surface = pygame.surfarray.make_surface(np.rot90(frame_flipped, k=3))
@@ -90,18 +91,19 @@ def playGame():
 
         pygame.time.set_timer(CHANGE_GESTURE_EVENT, 1000)
 
+SCREEN_LENGTH = 1366
+SCREEN_HEIGHT = 768
+LIGHTBROWN = (232, 179, 89)
+BROWN = (143, 75, 2)
+ORANGE = (253, 152, 50)
+FONT = pygame.font.SysFont('calibri', 100)
+
 #PNGS
 rockPic = pygame.transform.scale(pygame.image.load("gesturePNGs/rock.png"), (200, 200))
 paperPic = pygame.transform.scale(pygame.image.load("gesturePNGs/paper.png"), (200, 200))
 scissorsPic = pygame.transform.scale(pygame.image.load("gesturePNGs/scissors.png"), (200, 200))
 shootPic = pygame.transform.scale(pygame.image.load("gesturePNGs/shoot.png"), (200, 200))
-
-SCREEN_LENGTH = 1600
-SCREEN_HEIGHT = 800
-LIGHTBROWN = (232, 179, 89)
-BROWN = (143, 75, 2)
-ORANGE = (253, 152, 50)
-FONT = pygame.font.SysFont('calibri', 100)
+backgroundPic = pygame.transform.scale(pygame.image.load("gesturePNGs/background.png"), (SCREEN_LENGTH, SCREEN_HEIGHT))
 
 CHANGE_GESTURE_EVENT = pygame.USEREVENT + 1
 
@@ -125,10 +127,10 @@ cap = cv2.VideoCapture(2, cv2.CAP_DSHOW)
 
 toggleAnnotationButton = Button(
     screen,
-    SCREEN_LENGTH/3 - 25,
-    SCREEN_HEIGHT/5 + 400,
-    SCREEN_LENGTH/3 + 50,
-    SCREEN_HEIGHT/5 - 150,
+    SCREEN_LENGTH/3 - 25, # Right X
+    SCREEN_HEIGHT/5 + 400, # Top Y
+    SCREEN_LENGTH/3 + 50, # Lenght
+    SCREEN_HEIGHT/5 - 150, # Width
 
     text='Toggle Annotations',
     fontSize = 30,
@@ -188,17 +190,19 @@ while run:
     lastGesture = gesture
 
     screen.fill(LIGHTBROWN)
+    screen.blit(backgroundPic, (0,0))
+
     surface = cvImage_to_pyGameSurface(annotatedFrame)
     surface_width, surface_height = surface.get_size()
     
     #border
-    pygame.draw.rect(screen, BROWN, (SCREEN_LENGTH/3 - 25, SCREEN_HEIGHT/5 - 25, surface_width + 50, surface_height + 50), width=25, border_radius=25)
+    #pygame.draw.rect(screen, BROWN, (SCREEN_LENGTH/3 - 25, SCREEN_HEIGHT/5 - 25, surface_width + 50, surface_height + 50), width=25, border_radius=25)
 
     #ROCK PAPER SCISSOR SHOOT display/text box
     pygame.draw.rect(screen, ORANGE, pygame.Rect(SCREEN_LENGTH/3 - 25, 20, 580, 150), border_radius=25)
     screen.blit(FONT.render(titleText, True, BROWN), (SCREEN_LENGTH/3 + 50, 50))
 
-    screen.blit(surface, (SCREEN_LENGTH/3, SCREEN_HEIGHT/5))
+    screen.blit(surface, (int((0.77/10) * SCREEN_LENGTH), int((0.97 / 5.63) * SCREEN_HEIGHT)))
 
     if displayGesture:
         x = 700
