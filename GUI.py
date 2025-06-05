@@ -97,7 +97,7 @@ scissorsPic = pygame.transform.scale(pygame.image.load("gesturePNGs/scissors.png
 shootPic = pygame.transform.scale(pygame.image.load("gesturePNGs/shoot.png"), (200, 200))
 
 SCREEN_LENGTH = 1600
-SCREEN_HEIGHT = 1000
+SCREEN_HEIGHT = 800
 LIGHTBROWN = (232, 179, 89)
 BROWN = (143, 75, 2)
 ORANGE = (253, 152, 50)
@@ -121,7 +121,7 @@ lastGesture = "Paper"
 currDisplayGesture = "Scissors"
 
 screen = pygame.display.set_mode((SCREEN_LENGTH, SCREEN_HEIGHT))
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW) 
+cap = cv2.VideoCapture(2, cv2.CAP_DSHOW) 
 
 toggleAnnotationButton = Button(
     screen,
